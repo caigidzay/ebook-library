@@ -1,232 +1,33 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Thư Viện Sách — Đọc ebook online</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Playfair+Display:wght@600;800&display=swap&subset=vietnamese" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#03101f">
+<title>Thư Viện Ebook | Đọc sách, mở rộng tri thức</title>
 <style>
-:root{--bg:#f6f0e4;--ink:#1d1a16;--muted:#7a6f60;--card:#fffaf0;--line:#e3d8c4;--accent:#8c2f1b;--on:#fff;--brass:#b9852a;--shadow:rgba(60,40,15,.3)}
-:root[data-theme=dark]{--bg:#14110e;--ink:#f1e9d8;--muted:#a39886;--card:#1e1a15;--line:#332c23;--accent:#e0a458;--on:#14110e;--brass:#e0a458;--shadow:rgba(0,0,0,.65)}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;min-height:100vh;transition:background .3s,color .3s;
-  background-image:radial-gradient(circle at 15% 0%,rgba(185,133,42,.10),transparent 45%)}
-button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
-.serif{font-family:'Playfair Display',Georgia,serif}
-
-header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.bar{flex-wrap:wrap;max-width:1280px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
-.logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
-.logo svg{color:var(--accent)}
-.search{flex:1;max-width:460px;margin-left:auto}
-.search input{width:100%;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px;outline:none;transition:border-color .2s}
-.search input:focus{border-color:var(--accent)}
-.theme{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:17px;flex-shrink:0}
-
-.hero{max-width:1280px;margin:0 auto;padding:46px 20px 18px}
-.hero h1{font-size:clamp(32px,6vw,58px);line-height:1.08;font-weight:800;max-width:760px}
-.hero h1 em{font-style:italic;color:var(--accent)}
-.hero p{margin-top:14px;color:var(--muted);max-width:520px;line-height:1.65}
-.rule{display:flex;align-items:center;gap:10px;margin-top:22px;color:var(--brass)}
-.rule::before,.rule::after{content:'';height:1px;background:currentColor;flex:1;opacity:.5}
-.rule span{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-
-.dd{position:relative}
-.ddb{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:500;white-space:nowrap}
-.ddb:hover,.dd.open .ddb{border-color:var(--accent)}
-.ddb svg{transition:transform .2s}.dd.open .ddb svg{transform:rotate(180deg)}
-.ddl{display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:30;min-width:220px;max-height:340px;overflow-y:auto;padding:6px;list-style:none;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 40px -12px var(--shadow)}
-.dd.open .ddl{display:block}
-.ddl button{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:8px;font-size:14px}
-.ddl button:hover{background:var(--bg)}
-.ddl button.on{background:var(--accent);color:var(--on);font-weight:600}
-.search{position:relative}.search input{padding-right:40px}
-.clr{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;color:var(--muted);display:none}
-.search.has .clr{display:block}
-#epub{position:absolute;inset:0;display:none;z-index:1}#epub.on{display:block}
-.enav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:64px;font-size:30px;border-radius:10px;background:color-mix(in srgb,var(--card) 85%,transparent);border:1px solid var(--line);display:none}
-.enav.on{display:block}#eprev{left:8px}#enext{right:8px}
-
-.grid{max-width:1280px;margin:0 auto;padding:22px 20px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:34px 24px}
-.book{display:flex;flex-direction:column;gap:12px;text-align:left;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
-.book:hover,.book:focus-visible{transform:translateY(-8px)}
-.cover{position:relative;display:block;aspect-ratio:2/3;border-radius:3px 8px 8px 3px;overflow:hidden;background:var(--card);
-  box-shadow:0 14px 26px -10px var(--shadow),0 2px 4px rgba(0,0,0,.15);transition:box-shadow .25s}
-.book:hover .cover{box-shadow:0 26px 36px -12px var(--shadow),0 2px 4px rgba(0,0,0,.15)}
-.cover::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
-  background:linear-gradient(90deg,rgba(0,0,0,.34) 0,rgba(255,255,255,.22) 3%,rgba(0,0,0,.12) 6%,transparent 12%)}
-.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
-.fb{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:22px 16px 18px 22px;color:#f6ecd6;text-align:left}
-.fb b{font-family:'Playfair Display',serif;font-size:18px;line-height:1.2;font-weight:800}
-.fb i{font-size:12px;font-style:normal;opacity:.8;border-top:1px solid rgba(246,236,214,.4);padding-top:8px}
-.t{font-family:'Playfair Display',serif;font-weight:600;font-size:15.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.a{font-size:12.5px;color:var(--muted);margin-top:3px;display:block}
-.empty{grid-column:1/-1;text-align:center;padding:70px 0;color:var(--muted)}
-footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;color:var(--muted);font-size:13px}
-
-#reader{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column}
-#reader.open{display:flex}
-.rbar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--card)}
-.rbar h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rbtn{padding:8px 14px;border-radius:8px;border:1px solid var(--line);font-size:13px;font-weight:500;white-space:nowrap;transition:.2s}
-.rbtn:hover{border-color:var(--accent)}
-.rbtn.p{background:var(--accent);color:var(--on);border-color:var(--accent)}
-.rbody{position:relative;flex:1;background:var(--bg)}
-.ld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;color:var(--muted);line-height:1.7;font-size:14px}
-#frame{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:1}
-@media(max-width:720px){.search{order:3;flex-basis:100%;max-width:none}}@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr);gap:26px 16px}.logo span{display:none}.hero{padding-top:30px}.rbtn.h{display:none}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
-</head>
-<body>
-<header><div class="bar">
-  <div class="logo serif"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5A2.5 2.5 0 0 1 6.5 19H20v2H6.5"/></svg><span>Thư Viện</span></div>
-  <div class="dd" id="dd"><button class="ddb" id="ddb" aria-haspopup="listbox"><span id="ddt">Thể loại</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="6 9 12 15 18 9"/></svg></button><ul class="ddl" id="ddl" role="listbox"></ul></div>
-  <div class="search" id="sb"><input id="q" type="text" placeholder="Nhập tên sách để tìm..." aria-label="Tìm sách" autocomplete="off"><button class="clr" id="clr" aria-label="Xoá">✕</button></div>
-  <button class="theme" id="theme" aria-label="Đổi giao diện sáng/tối">☾</button>
-</div></header>
-
-<section class="hero">
-  <h1 class="serif">Đọc sách <em>online</em>,<br>chạm là đọc.</h1>
-  <p>Chọn một cuốn, bấm vào bìa là đọc ngay trên trình duyệt — không cần tải về, không cần cài ứng dụng.</p>
-  <div class="rule"><span id="count"></span></div>
-</section>
-<main class="grid" id="grid"></main>
-<footer>Thư Viện Sách · Sách lưu trên Google Drive, đọc trực tiếp trên web</footer>
-
-<div id="reader" role="dialog" aria-modal="true" aria-label="Đọc sách">
-  <div class="rbar">
-    <button class="rbtn" id="back">← Quay lại</button>
-    <h2 id="rtitle"></h2>
-    <a class="rbtn h" id="rdrive" target="_blank" rel="noopener">Mở Drive ↗</a>
-    <button class="rbtn ef" id="fm" hidden>A−</button><button class="rbtn ef" id="fp" hidden>A+</button><button class="rbtn p" id="rfull">Toàn màn hình</button>
-  </div>
-  <div class="rbody"><div class="ld">Đang tải sách…<br>Nếu quá lâu, bấm "Mở Drive" để đọc ở tab mới.</div><iframe id="frame" title="Nội dung sách" allow="fullscreen"></iframe><div id="epub"></div><button class="enav" id="eprev" aria-label="Trang trước">‹</button><button class="enav" id="enext" aria-label="Trang sau">›</button></div>
-</div>
-
+:root{--bg:#03101f;--panel:#0b1b2d;--line:#1b3046;--text:#f5f8ff;--muted:#9aacc2;--blue:#168cff}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Arial,Helvetica,sans-serif}button,input,select{font:inherit}a{color:inherit;text-decoration:none}.wrap{width:min(1450px,calc(100% - 56px));margin:auto}header{height:52px;position:sticky;top:0;z-index:20;background:#030d1af5;border-bottom:1px solid #24344a}.nav{height:100%;display:flex;align-items:center;gap:36px}.brand{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:800;white-space:nowrap}.brand-icon{font-size:27px}.links{display:flex;gap:31px;height:100%;margin-left:8px}.links a{display:flex;align-items:center;color:#dce6f5;font-size:12px;border-bottom:2px solid transparent}.links a:hover,.links a.active{color:#48aaff;border-color:#168cff}.navright{margin-left:auto;display:flex;gap:10px}.iconbtn{width:31px;height:31px;border:1px solid #26384d;border-radius:9px;background:#0d1c2f;color:#e9f3ff;cursor:pointer}
+.hero{height:310px;position:relative;overflow:hidden;border-bottom:1px solid #15273a;background:#0a1727}.hero-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 56%;opacity:.84}.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,11,23,.97),rgba(2,11,23,.83) 36%,rgba(2,11,23,.18) 100%),linear-gradient(0deg,#03101f55,transparent 45%)}.hero-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}.eyebrow{font-size:10px;letter-spacing:3px;font-weight:800;color:#b9d9ff;margin-bottom:12px}.hero h1{font-size:clamp(30px,3.5vw,42px);line-height:1.12;letter-spacing:-1.2px;margin:0 0 14px;font-weight:850}.hero h1 span{color:#369bff}.hero p{max-width:500px;color:#e1e8f2;margin:0 0 18px;font-size:14px}.searchbar{width:min(520px,100%);height:42px;display:flex;align-items:center;gap:9px;background:#f7faff;border:2px solid #c5ddfa;border-radius:24px;padding:4px 5px 4px 14px}.searchbar .glass{font-size:19px;color:#8b9eb5}.searchbar input{flex:1;min-width:0;border:0;outline:0;color:#17283e;background:transparent;font-size:12px}.searchbar button{border:0;border-radius:20px;background:linear-gradient(135deg,#249dff,#0867e8);color:white;padding:9px 18px;font-weight:750;cursor:pointer;font-size:12px}.quote{position:absolute;right:5%;top:42%;z-index:1;max-width:190px;color:white;font:italic 12px/1.7 Georgia,serif;text-shadow:0 2px 8px #000}.quote small{display:block;color:#c3d1e2;margin-top:8px;font:10px Arial}
+.section{padding:16px 0 18px;border-bottom:1px solid #14273b;scroll-margin-top:65px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:14px}.section-head h2{font-size:18px;margin:0;font-weight:800}.more{font-size:11px;color:#75baff;white-space:nowrap}.categories{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:12px}.category{border:0;background:transparent;color:#eaf2fd;display:flex;align-items:center;flex-direction:column;gap:6px;cursor:pointer;padding:3px 0 5px}.cat-icon{width:54px;height:54px;display:grid;place-items:center;border-radius:15px;font-size:25px;background:linear-gradient(145deg,var(--c),#101d36);box-shadow:inset 0 0 0 1px #ffffff1a,0 6px 15px #0003;transition:.2s}.category:hover .cat-icon,.category.selected .cat-icon{transform:translateY(-3px);box-shadow:0 0 0 2px #58b7ff,0 7px 22px #168cff45}.category span:last-child{font-size:11px;text-align:center}.book-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}.book-card{position:relative;min-width:0;border:1px solid #1a3047;background:linear-gradient(145deg,#0c1d30,#091728);border-radius:11px;padding:7px 7px 10px;transition:transform .2s,border-color .2s;cursor:pointer}.book-card:hover{transform:translateY(-3px);border-color:#3b83bd}.cover{height:clamp(160px,17vw,220px);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,var(--c1),var(--c2));border-radius:3px;margin-bottom:7px;text-align:center}.cover img{position:absolute;width:100%;height:100%;inset:0;object-fit:cover;z-index:2}.cover img:not([src=""])+.cover-placeholder{display:none}.cover-placeholder{position:relative;z-index:1;width:86%;height:94%;border:1px solid #ffffff45;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:10px;color:#fff;text-shadow:0 2px 5px #0009}.cover-placeholder .mini{font:8px Georgia;letter-spacing:1px;margin-bottom:15px;opacity:.8}.cover-placeholder strong{font:bold clamp(17px,1.8vw,25px)/1.08 Georgia,serif;text-transform:uppercase}.cover-placeholder small{font:10px Georgia;margin-top:13px}.book-tag{display:inline-block;background:#15508a;color:#e6f4ff;border-radius:5px;padding:3px 6px;font-size:9px;margin-bottom:5px}.book-title{font-size:11px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.author{font-size:10px;color:#a7b6c9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}.rating{font-size:10px;color:#d7e1ef;margin-top:7px;display:flex;align-items:center;gap:4px}.star{color:#ffc43b;font-size:13px}.round-arrow{margin-left:auto;width:25px;height:25px;border-radius:50%;border:1px solid #29435d;background:#142941;color:#e9f5ff;font-size:16px;cursor:pointer}.fav{position:absolute;right:12px;top:12px;border:1px solid #ffffff44;border-radius:50%;width:27px;height:27px;background:#061326c9;color:#fff;z-index:3;cursor:pointer}.fav.on{color:#ff7fbd}.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px}.filters input,.filters select{background:#0b1b2d;border:1px solid #243950;border-radius:9px;padding:9px 12px;color:#edf5ff;outline:none}.filters input{flex:1;min-width:180px}.filters select{min-width:140px}.empty{grid-column:1/-1;padding:30px;text-align:center;border:1px dashed #29415b;border-radius:12px;color:var(--muted)}footer{padding:22px 0 28px;background:#020b17}.footer{display:flex;align-items:center;gap:24px}.footer .brand{font-size:14px}.tagline{font-size:10px;color:#91a4bb}.footerlinks{display:flex;gap:23px;margin:auto;font-size:11px}.copyright{font-size:9px;color:#91a4bb;text-align:right}.modal{position:fixed;inset:0;background:#000;z-index:999;display:none;align-items:stretch;justify-content:stretch;padding:0}.modal.open{display:flex}.modal-box{width:100vw;height:100dvh;max-width:none;max-height:none;display:flex;flex-direction:column;background:#0b1929;border:0;border-radius:0;overflow:hidden}.modal-head{height:48px;display:flex;align-items:center;gap:12px;padding:0 14px;border-bottom:1px solid #20364c}.modal-head strong{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.modal-head a,.modal-head button{color:#edf6ff;background:#142941;border:1px solid #29415a;border-radius:7px;padding:7px 10px;font-size:11px;cursor:pointer}.modal-head button{font-size:18px}.reader{flex:1;min-height:0;width:100%;height:calc(100dvh - 48px);background:#111}.reader iframe{display:block;width:100%;height:100%;min-height:0;border:0;background:#111}.reader-help{padding:30px;text-align:center;color:#bdcce0}.reader-help code{color:#8ec9ff}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,15px);opacity:0;background:#142941;border:1px solid #38516b;border-radius:9px;padding:10px 15px;z-index:80;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1000px){.nav{gap:20px}.links{gap:18px}.categories{grid-template-columns:repeat(5,minmax(0,1fr));row-gap:15px}.book-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.quote{display:none}}@media(max-width:650px){.wrap{width:calc(100% - 28px)}header{height:56px}.nav{gap:10px}.brand{font-size:14px}.brand-icon{font-size:24px}.links{display:none;position:absolute;left:0;right:0;top:55px;padding:12px 18px;background:#071526;flex-direction:column;gap:0;border-bottom:1px solid var(--line)}.links.show{display:flex}.links a{height:40px}.hero{height:340px}.hero-art{object-position:65% center;opacity:.65}.hero-shade{background:linear-gradient(90deg,#020b17ed,#020b17a8 75%)}.hero h1{font-size:31px}.hero p{font-size:12px}.eyebrow{font-size:9px;letter-spacing:2px}.searchbar{height:43px}.searchbar button{padding:9px 12px}.section{padding:14px 0}.section-head h2{font-size:16px}.categories{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px 6px}.cat-icon{width:45px;height:45px;border-radius:13px;font-size:22px}.category span:last-child{font-size:10px}.book-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cover{height:clamp(190px,62vw,300px)}.cover-placeholder strong{font-size:clamp(20px,6vw,30px)}.footer{align-items:flex-start;flex-wrap:wrap;gap:12px}.footerlinks{order:3;width:100%;margin:4px 0 0;gap:18px}.copyright{margin-left:auto;max-width:145px}.filters select{flex:1}.modal{padding:0}.modal-box{height:100dvh;width:100vw;border-radius:0}.modal-head{height:48px;min-height:48px;gap:6px;padding:0 8px}.reader{height:calc(100dvh - 48px)}}
+</style></head><body>
+<header><div class="wrap nav"><a class="brand" href="#home"><span class="brand-icon">📘</span><span>Thư Viện Ebook</span></a><nav class="links" id="navlinks"><a class="active" href="#home">Trang chủ</a><a href="#theloai">Thể loại</a><a href="#sachmoi">Sách mới</a><a href="#yeuthich">Yêu thích</a></nav><div class="navright"><button class="iconbtn" id="themeBtn" aria-label="Giao diện">☾</button><button class="iconbtn" id="searchJump" aria-label="Tìm sách">⌕</button><button class="iconbtn" id="menuBtn" aria-label="Menu" style="display:none">☰</button></div></div></header>
+<main id="home"><section class="hero"><img class="hero-art" alt="" src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=2000&q=85"><div class="hero-shade"></div><div class="wrap hero-content"><div class="eyebrow">ĐỌC SÁCH · MỞ RỘNG TRI THỨC</div><h1>Kho sách điện tử<br>dành cho <span>mọi người</span></h1><p>Tìm kiếm, khám phá và đọc hàng nghìn cuốn sách PDF miễn phí ngay trên trình duyệt. Mọi lúc, mọi nơi.</p><form class="searchbar" id="searchForm"><span class="glass">⌕</span><input id="heroSearch" placeholder="Tìm kiếm sách, tác giả, thể loại..." aria-label="Tìm sách"><button type="submit">Tìm kiếm</button></form></div><div class="quote">“Sách là ngọn đèn sáng nhất trong đêm tối của tri thức.”<small>— Unknown</small></div></section>
+<section class="section" id="theloai"><div class="wrap"><div class="section-head"><h2>Thể loại nổi bật</h2><a class="more" href="#sachmoi">Xem tất cả →</a></div><div class="categories" id="categories"></div></div></section><section class="section" id="noibat"><div class="wrap"><div class="section-head"><h2>⭐ Best Seller</h2><a class="more" href="#sachmoi">Xem tất cả →</a></div><div class="book-grid" id="featuredGrid"></div></div></section><section class="section" id="sachmoi"><div class="wrap"><div class="section-head"><h2>📘 Sách mới cập nhật</h2><a class="more" href="#sachmoi">Xem tất cả →</a></div><div class="book-grid" id="latestGrid"></div></div></section><section class="section" id="yeuthich"><div class="wrap"><div class="section-head"><h2>♥ Sách yêu thích</h2></div><div class="book-grid" id="favoritesGrid"></div></div></section></main>
+<footer><div class="wrap footer"><a class="brand" href="#home"><span class="brand-icon">📘</span><span>Thư Viện Ebook<div class="tagline">Tri thức là sức mạnh</div></span></a><nav class="footerlinks"><a href="#home">Trang chủ</a><a href="#theloai">Thể loại</a><a href="#sachmoi">Sách mới</a><a href="#yeuthich">Yêu thích</a></nav><div class="copyright">© <span id="year"></span> Thư Viện Ebook. Chia sẻ tri thức, lan tỏa giá trị.</div></div></footer>
+<div class="modal" id="readerModal" role="dialog" aria-modal="true"><div class="modal-box"><div class="modal-head"><strong id="readerTitle">Đọc sách</strong><a id="openDrive" href="#" target="_blank" rel="noopener">Mở Google Drive ↗</a><button id="closeReader" aria-label="Đóng">×</button></div><div class="reader" id="readerContent"></div></div></div><div class="toast" id="toast"></div>
 <script>
-/* =====================================================================
-   CÁCH THÊM SÁCH: thêm 1 dòng vào BOOKS bên dưới (sách mới nhất để cuối mảng).
-   - link: dán link chia sẻ Google Drive của file PDF.
-     BẮT BUỘC trên Drive: Chia sẻ -> "Bất kỳ ai có đường liên kết" (Người xem).
-   - cover: để "" thì web tự lấy trang đầu của PDF làm bìa; muốn bìa đẹp hơn thì dán link ảnh.
-   - category: chọn từ danh sách Thể loại (Tiểu Thuyết, Văn Học, Lịch Sử, Kinh Tế, Tâm Lý...) hoặc tự đặt tên mới, web tự thêm vào menu.
-   - EPUB: đặt file .epub vào thư mục books/ của website rồi ghi link:"books/ten-sach.epub" (Google Drive KHÔNG xem được EPUB).
-   - Nhớ XOÁ các sách mẫu bên dưới (link mẫu chưa dùng được).
-   ===================================================================== */
-const BOOKS = [
-  { title:"Truyện Kiều", author:"Nguyễn Du", category:"Văn Học", year:1820, link:"https://drive.google.com/file/d/1iUrf76ivpPBYNHW0k3w37GA8pvbfcaFU/view?usp=drive_link", cover:"" },
-  { title:"Chinh Phụ Ngâm", author:"Đặng Trần Côn", category:"Văn Học", year:1741, link:"https://drive.google.com/file/d/11VwDSsmwJnO7kXcw8bL1MkbcRPmlMT1c/view?usp=drive_link", cover:"" },
-  { title:"Hoàng Lê Nhất Thống Chí", author:"Ngô Gia Văn Phái", category:"Lịch Sử", year:1800, link:"https://drive.google.com/file/d/1t4GSszFcHmmahxmc_yNXWuDds9kf0cuv/view?usp=drive_link", cover:"" },
-  { title:"Đại Việt Sử Ký Toàn Thư", author:"Ngô Sĩ Liên", category:"Lịch Sử", year:1479, link:"https://drive.google.com/file/d/107SeI4F3E-Vj2suJU7jONQIarXUEV_kd/view?usp=drive_link", cover:"" },
-  { title:"Cung Oán Ngâm Khúc", author:"Nguyễn Gia Thiều", category:"Văn Học", year:1790, link:"https://drive.google.com/file/d/1qc4xvQkzFP4C95BhZMbY2VXT1t1P2qk1/view?usp=drive_link", cover:"" },
-  { title:"Nhật Ký Trong Tù", author:"Hồ Chí Minh", category:"Thơ", year:1960, link:"https://drive.google.com/file/d/18fzCpCuOFd0_zbeFTr_CT5qJQHOoh7QV/view?usp=drive_link", cover:"" },
+/* THÊM SÁCH: thêm sách mới vào đầu mảng books và đặt newest:true. Muốn sách xuất hiện đồng thời ở Best Seller, đặt thêm featured:true. Hai cờ độc lập. Sắp xếp Sách mới cập nhật dùng addedAt (số càng lớn càng mới), nếu không có addedAt thì dùng id. SÁCH MẪU. Để kết nối PDF thật: tải PDF lên Google Drive, chia sẻ "Bất kỳ ai có đường liên kết - Người xem", rồi điền ID vào driveId. ID nằm giữa /d/ và /view trong đường link Drive. */
+const books=[
+{"id":5,"title":"Angela Merkel","author":"Stefan Kornelius","category":"Lịch sử","description":"","driveId":"17Tieksna8TbNSAK7uRNf1cP-AF5ZEUO-","coverImage":"","color":["#174c78","#071526"],"featured":false,"newest":true,"rating":"—","reviews":"Mới"},
+{"id":4,"title":"Ăn Gì Bổ Não","author":"David Perlmutter","category":"Sức khỏe","description":"","driveId":"1RmixTx4ofH3FKFKXyyZCTfQM1Iooym7D","coverImage":"","color":["#174c78","#071526"],"featured":false,"newest":true,"rating":"—","reviews":"Mới"},
+{"id":3,"title":"Ăn Theo Nhóm Máu","author":"Peter J. D’Adamo","category":"Sức khỏe","description":"","driveId":"1mupl34T30CAR1xFC3CXi0SMDfL6lbHwS","coverImage":"","color":["#174c78","#071526"],"featured":false,"newest":true,"rating":"—","reviews":"Mới"},
+{"id":2,"title":"100 Câu Chuyện Hay Thế Giới","author":"Quách Thành","category":"Văn học","description":"","driveId":"1iUrf76ivpPBYNHW0k3w37GA8pvbfcaFU","coverImage":"","color":["#174c78","#071526"],"featured":false,"newest":true,"rating":"—","reviews":"Mới"},
+{"id":1,"title":"Sang Chấn Tâm Lý - Hiểu Để Chữa Lành","author":"Bessel Van Der Kolk, M.D.p","category":"Tâm lý","description":"","driveId":"11VwDSsmwJnO7kXcw8bL1MkbcRPmlMT1c","coverImage":"","color":["#174c78","#071526"],"featured":false,"newest":true,"rating":"—","reviews":"Mới"},
+{"id":0,"title":"2030_ Những Xu Hướng Lớn Sẽ Định Hình Thế Giới Tương Lai","author":"Mauro F. Guillén","category":"Kinh tế","description":"","driveId":"1Fj24zmRpDh95v9ZCjBoNJzSCBhvKmA5g","coverImage":"","color":["#174c78","#071526"],"featured":true,"newest":true,"rating":"—","reviews":"Mới"},
+
 ];
-
-const $ = s => document.querySelector(s);
-const norm = s => String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/gi,'d').toLowerCase();
-const esc = s => String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const driveId = u => { const m = String(u).match(/\/d\/([\w-]{10,})|[?&]id=([\w-]{10,})/); return m ? (m[1]||m[2]) : (/^[\w-]{20,}$/.test(u) ? u : ''); };
-const hue = s => { let h = 0; for(const c of s) h = (h*31 + c.charCodeAt(0)) % 360; return h; };
-
-let cat = 'Tất cả', term = '';
-
-function cover(b){
-  const id = driveId(b.link), h = hue(b.title);
-  const src = b.cover || (id ? `https://drive.google.com/thumbnail?id=${id}&sz=w500` : '');
-  return `<span class="cover"><span class="fb" style="background:linear-gradient(160deg,hsl(${h} 38% 34%),hsl(${(h+30)%360} 42% 18%))"><b>${esc(b.title)}</b><i>${esc(b.author)}</i></span>`
-       + (src ? `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '') + `</span>`;
-}
-
-const PRESET = ['Tiểu Thuyết','Văn Học','Lịch Sử','Kinh Tế','Tâm Lý','Kỹ Năng Sống','Khoa Học','Thiếu Nhi','Thơ'];
-const isEpub = b => b.format==='epub' || /\.epub(\?|#|$)/i.test(b.link);
-
-function buildMenu(){
-  const extra = [...new Set(BOOKS.map(b => b.category).filter(Boolean))].filter(c => !PRESET.some(p => norm(p)===norm(c)));
-  $('#ddl').innerHTML = ['Tất cả', ...PRESET, ...extra].map(c => `<li><button class="${norm(c)===norm(cat)?'on':''}" data-c="${esc(c)}">${esc(c)}</button></li>`).join('');
-  $('#ddt').textContent = cat==='Tất cả' ? 'Thể loại' : cat;
-}
-function render(){
-  buildMenu();
-  const t = norm(term);
-  const items = BOOKS.map((b,i) => ({b,i})).reverse().filter(({b}) =>
-    (cat==='Tất cả' || norm(b.category)===norm(cat)) && (!t || norm([b.title,b.author,b.category,b.year].join(' ')).includes(t)));
-  $('#count').textContent = `${items.length} cuốn sách` + (cat!=='Tất cả' ? ' · '+cat : '');
-  $('#sb').classList.toggle('has', !!term);
-  $('#grid').innerHTML = items.length ? items.map(({b,i}) =>
-    `<button class="book" data-i="${i}" aria-label="Đọc ${esc(b.title)}">${cover(b)}<span><span class="t">${esc(b.title)}</span><span class="a">${esc(b.author)}${b.year ? ' · '+esc(b.year) : ''}</span></span></button>`
-  ).join('') : '<p class="empty">Không tìm thấy cuốn nào phù hợp.</p>';
-}
-
-// ---- Đọc EPUB bằng epub.js (nạp thư viện khi cần). File EPUB phải cùng website hoặc nơi cho phép truy cập chéo.
-const loadJs = src => new Promise((ok,no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => no(new Error('load')); document.head.appendChild(s); });
-let book = null, rend = null, fsz = 100;
-function setEpubUi(on){ $('#epub').classList.toggle('on',on); document.querySelectorAll('.enav').forEach(e => e.classList.toggle('on',on)); document.querySelectorAll('.ef').forEach(e => e.hidden = !on); }
-async function openEpub(b){
-  const ld = $('.ld'); ld.style.display = 'flex'; ld.textContent = 'Đang tải EPUB…';
-  try{
-    if(!window.ePub){ await loadJs('https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js'); await loadJs('https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js'); }
-    book = ePub(b.link);
-    rend = book.renderTo('epub', {width:'100%', height:'100%', flow:'paginated', spread:'none'});
-    const cs = getComputedStyle(document.documentElement);
-    rend.themes.default({body:{color:cs.getPropertyValue('--ink'), background:cs.getPropertyValue('--bg'), 'font-family':'Georgia,serif', 'line-height':'1.75'}});
-    rend.themes.fontSize(fsz+'%');
-    await rend.display();
-    ld.style.display = 'none';
-  }catch(e){ ld.innerHTML = 'Không mở được file EPUB.<br>File phải nằm cùng website (thư mục books/) hoặc nơi cho phép truy cập chéo — Google Drive không dùng được.'; }
-}
-
-function openBook(i){
-  const b = BOOKS[i], id = driveId(b.link), ld = $('.ld');
-  $('#rtitle').textContent = b.title;
-  $('#rdrive').style.display = id ? '' : 'none';
-  $('#rdrive').href = id ? `https://drive.google.com/file/d/${id}/view` : '#';
-  $('#reader').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  if(isEpub(b)){
-    $('#frame').src = 'about:blank';
-    if(id){ setEpubUi(false); ld.style.display = 'flex'; ld.innerHTML = 'Google Drive không xem trực tiếp được file EPUB.<br>Hãy chuyển sang PDF, hoặc đặt file .epub cùng website (thư mục books/).'; return; }
-    setEpubUi(true); openEpub(b);
-  } else {
-    setEpubUi(false);
-    ld.style.display = 'flex'; ld.innerHTML = 'Đang tải sách…<br>Nếu quá lâu, bấm "Mở Drive" để đọc ở tab mới.';
-    $('#frame').src = id ? `https://drive.google.com/file/d/${id}/preview` : 'about:blank';
-  }
-}
-function closeBook(){
-  if(document.fullscreenElement) document.exitFullscreen();
-  if(rend){ try{ book.destroy(); }catch(e){} rend = null; book = null; $('#epub').innerHTML = ''; }
-  setEpubUi(false);
-  $('#reader').classList.remove('open');
-  $('#frame').src = 'about:blank';
-  document.body.style.overflow = '';
-}
-
-$('#grid').addEventListener('click', e => { const el = e.target.closest('.book'); if(el) openBook(+el.dataset.i); });
-$('#ddb').onclick = e => { e.stopPropagation(); $('#dd').classList.toggle('open'); };
-$('#ddl').addEventListener('click', e => { const el = e.target.closest('button'); if(el){ cat = el.dataset.c; $('#dd').classList.remove('open'); render(); } });
-document.addEventListener('click', e => { if(!e.target.closest('#dd')) $('#dd').classList.remove('open'); });
-$('#q').addEventListener('input', e => { term = e.target.value; render(); });
-$('#clr').onclick = () => { term = ''; $('#q').value = ''; render(); $('#q').focus(); };
-$('#eprev').onclick = () => rend && rend.prev();
-$('#enext').onclick = () => rend && rend.next();
-$('#fm').onclick = () => { if(rend){ fsz = Math.max(70, fsz-10); rend.themes.fontSize(fsz+'%'); } };
-$('#fp').onclick = () => { if(rend){ fsz = Math.min(200, fsz+10); rend.themes.fontSize(fsz+'%'); } };
-document.addEventListener('keydown', e => { if(e.key==='Escape') $('#dd').classList.remove('open'); if(rend){ if(e.key==='ArrowRight') rend.next(); if(e.key==='ArrowLeft') rend.prev(); } });
-$('#back').onclick = closeBook;
-$('#rfull').onclick = () => { const r = $('#reader'); (r.requestFullscreen ? r.requestFullscreen() : null); };
-document.addEventListener('keydown', e => { if(e.key==='Escape' && $('#reader').classList.contains('open') && !document.fullscreenElement) closeBook(); });
-
-// Giao diện sáng/tối (nhớ lựa chọn của người xem)
-function setTheme(t){ document.documentElement.dataset.theme = t; $('#theme').textContent = t==='dark' ? '☀' : '☾'; try{ localStorage.setItem('theme', t); }catch(e){} }
-let saved = null; try{ saved = localStorage.getItem('theme'); }catch(e){}
-setTheme(saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-$('#theme').onclick = () => setTheme(document.documentElement.dataset.theme==='dark' ? 'light' : 'dark');
-
-render();
-</script>
-</body>
-</html>
+const cats=[["Văn học","📘","#167de0"],["Kinh tế","📈","#168c64"],["Kỹ năng sống","👤","#7548d9"],["Công nghệ","▣","#00a9bc"],["Khoa học","⚛️","#b66a18"],["Lịch sử","🏛️","#bd3e72"],["Tâm lý","💜","#7950d0"],["Thiếu nhi","☻","#a77916"],["Sức khỏe","🍃","#1b8a65"],["Nhiều hơn","⠿","#52647c"]];const $=s=>document.querySelector(s),state={cat:"",favs:new Set(JSON.parse(localStorage.getItem("ebookFavs")||"[]"))};
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}function norm(s){return String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+function renderCats(){$("#categories").innerHTML=cats.map(([n,ic,c])=>`<button class="category ${state.cat===n?"selected":""}" data-cat="${esc(n)}"><span class="cat-icon" style="--c:${c}">${ic}</span><span>${esc(n)}</span></button>`).join("")}function card(b){const driveCover=(!b.coverImage&&b.driveId&&!b.driveId.startsWith("SAMPLE"))?`https://drive.google.com/thumbnail?id=${encodeURIComponent(b.driveId.trim())}&sz=w700`:"";const cover=b.coverImage||driveCover;return `<article class="book-card" data-read="${b.id}"><div class="cover" style="--c1:${b.color[0]};--c2:${b.color[1]}">${cover?`<img src="${esc(cover)}" alt="Bìa ${esc(b.title)}" onload="this.nextElementSibling.style.display='none'" onerror="this.remove();this.nextElementSibling.style.display='flex'">`:""}<div class="cover-placeholder"><span class="mini">THƯ VIỆN EBOOK</span><strong>${esc(b.title)}</strong><small>${esc(b.author)}</small></div><button class="fav ${state.favs.has(b.id)?"on":""}" data-fav="${b.id}" aria-label="Yêu thích">${state.favs.has(b.id)?"♥":"♡"}</button></div><span class="book-tag">${esc(b.category)}</span><div class="book-title" title="${esc(b.title)}">${esc(b.title)}</div><div class="author">${esc(b.author)}</div><div class="rating"><span class="star">★</span> ${b.rating} (${b.reviews})<button class="round-arrow" data-read="${b.id}" aria-label="Đọc sách">›</button></div></article>`}
+function render(){renderCats();const newest=books.filter(b=>b.newest).sort((a,b)=>(Number(b.addedAt)||Number(b.id)||0)-(Number(a.addedAt)||Number(a.id)||0));const best=books.filter(b=>b.featured);$("#featuredGrid").innerHTML=best.length?best.map(card).join(""):'<div class="empty">Chưa có sách được chọn làm Best Seller.</div>';$("#latestGrid").innerHTML=newest.length?newest.map(card).join(""):'<div class="empty">Chưa có sách mới cập nhật.</div>';let fav=books.filter(b=>state.favs.has(b.id));$("#favoritesGrid").innerHTML=fav.length?fav.map(card).join(""):'<div class="empty">Chưa có sách yêu thích. Nhấn ♡ trên bìa sách để lưu ở đây.</div>'}function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2200)}function openReader(id){let b=books.find(x=>x.id===+id);if(!b)return;let d=(b.driveId||"").trim(),valid=d&&!d.startsWith("SAMPLE");$("#readerTitle").textContent=b.title+" — "+b.author;$("#openDrive").style.display=valid?"inline-block":"none";$("#openDrive").href=valid?`https://drive.google.com/file/d/${encodeURIComponent(d)}/view`:"#";$("#readerContent").innerHTML=valid?`<iframe src="https://drive.google.com/file/d/${encodeURIComponent(d)}/preview" title="${esc(b.title)}"></iframe>`:`<div class="reader-help"><div style="font-size:40px">📖</div><h3>Sách mẫu — chưa kết nối PDF</h3><p>Thêm ID Google Drive vào trường <code>driveId</code> của cuốn sách trong file index.html.</p><p>Trên Drive, bật chia sẻ <b>Bất kỳ ai có đường liên kết — Người xem</b>.</p></div>`;$("#readerModal").classList.add("open");document.body.style.overflow="hidden"}function closeReader(){$("#readerModal").classList.remove("open");document.body.style.overflow=""}
+function search(q){const term=norm(q.trim());const matching=books.filter(b=>!term||norm([b.title,b.author,b.category,b.description].join(" ")).includes(term));$("#heroSearch").value=q;$("#latestGrid").innerHTML=matching.filter(b=>b.newest).sort((a,b)=>(Number(b.addedAt)||Number(b.id)||0)-(Number(a.addedAt)||Number(a.id)||0)).map(card).join("")||'<div class="empty">Không tìm thấy sách mới phù hợp.</div>';$("#featuredGrid").innerHTML=matching.filter(b=>b.featured).map(card).join("")||'<div class="empty">Không tìm thấy Best Seller phù hợp.</div>';$("#sachmoi").scrollIntoView({behavior:"smooth"})}$("#searchForm").addEventListener("submit",e=>{e.preventDefault();search($("#heroSearch").value)});document.addEventListener("click",e=>{let f=e.target.closest("[data-fav]");if(f){e.stopPropagation();let id=+f.dataset.fav;state.favs.has(id)?(state.favs.delete(id),toast("Đã bỏ khỏi yêu thích")):(state.favs.add(id),toast("Đã thêm vào yêu thích"));localStorage.setItem("ebookFavs",JSON.stringify([...state.favs]));render();return}let c=e.target.closest("[data-cat]");if(c){state.cat=c.dataset.cat==="Nhiều hơn"?"":(state.cat===c.dataset.cat?"":c.dataset.cat);renderCats();const matching=books.filter(b=>!state.cat||b.category===state.cat);$("#latestGrid").innerHTML=matching.filter(b=>b.newest).sort((a,b)=>(Number(b.addedAt)||Number(b.id)||0)-(Number(a.addedAt)||Number(a.id)||0)).map(card).join("")||'<div class="empty">Không có sách mới thuộc thể loại này.</div>';$("#featuredGrid").innerHTML=matching.filter(b=>b.featured).map(card).join("")||'<div class="empty">Không có Best Seller thuộc thể loại này.</div>';$("#sachmoi").scrollIntoView({behavior:"smooth"});return}let r=e.target.closest("[data-read]");if(r)openReader(r.dataset.read)});$("#closeReader").addEventListener("click",closeReader);$("#readerModal").addEventListener("click",e=>{if(e.target===$("#readerModal"))closeReader()});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeReader()});$("#searchJump").addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"});setTimeout(()=>$("#heroSearch").focus(),400)});$("#menuBtn").addEventListener("click",()=>$("#navlinks").classList.toggle("show"));document.querySelectorAll("#navlinks a").forEach(a=>a.addEventListener("click",()=>{$("#navlinks").classList.remove("show");document.querySelectorAll("#navlinks a").forEach(x=>x.classList.remove("active"));a.classList.add("active")}));$("#themeBtn").addEventListener("click",()=>toast("Giao diện tối đang được bật."));$("#year").textContent=new Date().getFullYear();if(matchMedia("(max-width:650px)").matches)$("#menuBtn").style.display="block";render();
+</script></body></html>
